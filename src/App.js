@@ -1,23 +1,44 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchGender, resetGender } from './redux/genderSlice';
 import './App.css';
 
 function App() {
+  const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.gender);
+
+  const handleInputChange = (event) => {
+    setName(event.target.value);
+    dispatch(resetGender());
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (name.trim()) {
+      dispatch(fetchGender(name));
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <input type="text" className="form-input" value={name} onChange={handleInputChange} />
+          <button type="submit" className="form-button">Guess Gender</button>
+        </form>
+        <div className="form-message">
+          {loading && <p>Loading...</p>}
+          {error && <p>An error occurred: {error}</p>}
+          {data && data.gender ? (
+            <p>
+              I think {name} is a {data.gender} name.
+            </p>
+          ) : data && (
+            <p>I could not determine what gender {name} could be.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
