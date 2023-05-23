@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import genderReducer from './redux/genderSlice';
-import './index.css';
 import App from './App';
 
 const store = configureStore({
@@ -12,9 +11,9 @@ const store = configureStore({
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const container = ReactDOM.createRoot(document.getElementById('plugin-target'));
 
-root.render(
+container.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
@@ -22,3 +21,4 @@ root.render(
   </React.StrictMode>
 );
 
+export default App;
