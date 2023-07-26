@@ -1,9 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import genderReducer from './redux/genderSlice';
 import App from './App';
+import '@ckcherry23/qi-components/dist/index.cjs.css';
 
 const store = configureStore({
   reducer: {
@@ -11,14 +12,11 @@ const store = configureStore({
   },
 });
 
-const container = ReactDOM.createRoot(document.getElementById('plugin-target'));
-
-container.render(
+ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 );
-
-export default App;

@@ -1,18 +1,18 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-const port = "3001";
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+const path = require('path');
+const port = "3000";
 
 module.exports = {
-  mode: "development",
   output: {
+    filename: '[name].[contenthash].js', 
+    path: path.resolve(__dirname, 'dist'),
     publicPath: `http://localhost:${port}/`,
   },
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
-  },
-  devServer: {
-    port: port,
-    historyApiFallback: true,
   },
   module: {
     rules: [
@@ -42,12 +42,13 @@ module.exports = {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
-      name: "guessGender",
+      name: "sampleReactPlugin",
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./GuessGender": "./src/register",
+        "./Register": "./src/register.tsx",
       },
       shared: {
         "react@^17.0.2": { singleton: true },
@@ -57,5 +58,5 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./public/index.html",
     }),
-  ],
+  ]
 };

@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchGender, resetGender } from './redux/genderSlice';
-import './App.css';
+import './styles/App.css';
 
 function App() {
   const [name, setName] = useState('');
@@ -24,6 +24,7 @@ function App() {
     <div className="container">
       <div className="form-container">
         <form onSubmit={handleSubmit}>
+          <div className='page-title xl'>Sample React Plugin</div>
           <input type="text" className="form-input" value={name} onChange={handleInputChange} />
           <button type="submit" className="form-button">Guess Gender</button>
         </form>
@@ -40,6 +41,7 @@ function App() {
         </div>
       </div>
     </div>
+
   );
 }
 
